@@ -34,4 +34,4 @@
 
 # 🌐 Check Out the Site
 
-#### 👉 Galleric Hub :
+#### 👉 Galleric Hub : https://galleric-hub.netlify.app/
