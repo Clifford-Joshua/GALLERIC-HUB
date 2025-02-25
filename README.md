@@ -2,9 +2,7 @@
 
 ### A responsive image gallery website built with modern web technologies. This is a personal project to enhance my skills in frontend development, focusing on Tailwind CSS, Vite, and React.
 
-# 🛠 Technologies Used
-
-# Common Languages
+# 🛠 Technologies Used(Common Languages)
 
 ### HTML
 
