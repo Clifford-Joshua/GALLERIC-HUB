@@ -1,12 +1,14 @@
+import Title from "./Title";
+import Search from "./Search";
 import styled from "styled-components";
 import Bg from "../../../assets/BackGround.jpg";
-
 const IntroContainer = () => {
   return (
     <Wrapper
-      className={`w-full min-h-[70vh] p-8 flex justify-center items-center`}
+      className={`w-full min-h-[70vh] md:min-h-[50vh] p-4 flex flex-col gap-[2rem] justify-center items-center `}
     >
-      BgImageContainer
+      <Title />
+      <Search />
     </Wrapper>
   );
 };
