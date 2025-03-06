@@ -13,12 +13,17 @@ const getProfile = () => {
 
 const Navbar = () => {
   const refContainer = useRef(null);
+  const [scroll, setScroll] = useState(false);
   const [notification, setNotification] = useState(false);
   const [userProfile, setUserProfile] = useState(getProfile());
 
   const handleUpload = () => {
     refContainer.current.click();
   };
+
+  window.addEventListener("scroll", () => {
+    window.scrollY > 0 ? setScroll(true) : setScroll(false);
+  });
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
@@ -48,14 +53,22 @@ const Navbar = () => {
 
   return (
     <Wrapper>
-      <nav className="flex justify-between items-center p-4 w-full fixed">
-        <Link to="/" className="logo ">
+      <nav
+        className={`flex justify-between items-center p-4 w-full fixed ${
+          scroll ? "bg-white" : "bg-transparent"
+        } z-50`}
+      >
+        <Link to="/" className={`logo ${scroll ? "text-black" : "text-white"}`}>
           GALLERIC HUB{" "}
         </Link>
         <div className="flex  gap-2 sm:gap-5 items-center">
           <button
             className={`text-2xl sm:text-3xl  cursor-pointer ${
-              notification ? "text-red-600" : "text-white"
+              notification
+                ? "text-red-600"
+                : scroll
+                ? "text-black"
+                : "text-white"
             }`}
             onClick={() => {
               setNotification(!notification);
@@ -92,7 +105,9 @@ const Navbar = () => {
           </button>
 
           <button
-            className="hidden md:block  bg-white rounded-2xl  p-3 md:px-[3.5rem] lg:py-[0.7rem] md:text-[1.2rem] lg:text-[1rem]  cursor-pointer hover:bg-gray-200 md:font-bold "
+            className={`hidden md:block ${
+              !scroll ? "bg-white " : "bg-black text-white"
+            }  rounded-2xl  p-3 md:px-[3.5rem] lg:py-[0.7rem] md:text-[1.2rem] lg:text-[1rem]  cursor-pointer hover:bg-gray-200 md:font-bold`}
             onClick={handleUpload}
           >
             Upload
@@ -115,7 +130,6 @@ const Wrapper = styled.div`
   /* ======================================== */
   /* Mobile View */
   .logo {
-    color: #fff;
     cursor: pointer;
     font-weight: 900;
     font-size: 1.1rem;
