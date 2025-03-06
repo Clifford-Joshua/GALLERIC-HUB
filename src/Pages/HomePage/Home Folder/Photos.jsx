@@ -16,7 +16,7 @@ const Photos = () => {
   const FetchApi = async () => {
     dispatch(setLoading(true));
     try {
-      const resp = await fetch(`api/search?query=${query}&per_page=30&page=1`, {
+      const resp = await fetch(`api/search?query=${query}`, {
         headers: { Authorization: Api_Key },
       });
 
