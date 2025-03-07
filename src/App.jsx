@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SharedPage from "./Pages/Shared/SharedPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+
 const App = () => {
   return (
     <BrowserRouter>
