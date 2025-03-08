@@ -1,9 +1,20 @@
+import { useAuth0 } from "@auth0/auth0-react";
+import { Navigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuth0();
 
-const ProtectedRoute = () => {
-  return (
-    <div>ProtectedRoute</div>
-  )
-}
+  const isUser = isAuthenticated && user;
 
-export default ProtectedRoute
+  if (!isUser) {
+    return <Navigate to={"/login"} />;
+  }
+
+  return children;
+};
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default ProtectedRoute;

@@ -1,9 +1,11 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import { IoNotifications } from "react-icons/io5";
 import { MdOutlineFileUpload } from "react-icons/md";
+import { FaUser, FaUserAltSlash } from "react-icons/fa";
 import { IoNotificationsOffSharp } from "react-icons/io5";
 
 const getProfile = () => {
@@ -17,6 +19,10 @@ const Navbar = () => {
   const [notification, setNotification] = useState(false);
   const [userProfile, setUserProfile] = useState(getProfile());
 
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+
+  console.log(user);
+
   const handleUpload = () => {
     refContainer.current.click();
   };
@@ -24,6 +30,8 @@ const Navbar = () => {
   window.addEventListener("scroll", () => {
     window.scrollY > 0 ? setScroll(true) : setScroll(false);
   });
+
+  const isUser = isAuthenticated && user;
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
@@ -50,6 +58,12 @@ const Navbar = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (isUser) {
+      toast.success("User Login Successfully");
+    }
+  }, [isUser]);
 
   return (
     <Wrapper>
@@ -81,10 +95,10 @@ const Navbar = () => {
             {notification ? <IoNotificationsOffSharp /> : <IoNotifications />}
           </button>
 
-          {userProfile ? (
+          {isUser ? (
             <img
-              src={userProfile}
-              alt="profile_image"
+              src={(isUser && userProfile) || user.picture}
+              alt={user.name}
               title="profile picture"
               className="w-[40px] h-[40px]  md:w-[50px] md:h-[50px]  rounded-full cursor-pointer"
             />
@@ -93,7 +107,7 @@ const Navbar = () => {
               title="profile picture"
               className="bg-blue-600 w-[40px] h-[40px]  md:w-[50px] md:h-[50px]  rounded-full text-white text-2xl md:text-2xl font-normal  font-sans flex justify-center items-center cursor-pointer"
             >
-              C
+              U
             </div>
           )}
 
@@ -103,6 +117,28 @@ const Navbar = () => {
           >
             <MdOutlineFileUpload />
           </button>
+
+          <div className="  cursor-pointer flex gap-4 items-center justify-center">
+            {!isUser ? (
+              <FaUser
+                className={` text-[1.6rem] md:text-[2rem] ${
+                  scroll ? "text-blue-700" : "text-white"
+                }`}
+                title="Login"
+                onClick={loginWithRedirect}
+              />
+            ) : (
+              <FaUserAltSlash
+                className={`  text-[2rem] md:text-[2.4rem] ${
+                  scroll ? "text-red-700" : "text-red-500"
+                }`}
+                title="LogOut"
+                onClick={() => {
+                  logout({ returnTo: window.location.origin });
+                }}
+              />
+            )}
+          </div>
 
           <button
             className={`hidden md:block ${

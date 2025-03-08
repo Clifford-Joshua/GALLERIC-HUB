@@ -20,8 +20,6 @@ const Photos = () => {
         headers: { Authorization: Api_Key },
       });
 
-      console.log(resp);
-
       if (resp.ok) {
         dispatch(setError(false));
         const data = await resp.json();
