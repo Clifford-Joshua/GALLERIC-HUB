@@ -1,5 +1,6 @@
 import Home from "./Pages/HomePage/Home";
 import Pexel from "./Pages/Photos/Pexel";
+import ScrollToTop from "./ScrollToTop";
 import Error from "./Pages/ErrorPage/Error";
 import Login from "./Pages/LoginPage/Login";
 import Video from "./Pages/VideoPage/Video";
@@ -12,6 +13,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<SharedPage />}>
           <Route index element={<Home />} />
