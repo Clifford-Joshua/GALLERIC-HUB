@@ -16,9 +16,12 @@ const Photos = () => {
   const FetchApi = async () => {
     dispatch(setLoading(true));
     try {
-      const resp = await fetch(`api/search?query=${query}`, {
-        headers: { Authorization: Api_Key },
-      });
+      const resp = await fetch(
+        `https://api.pexels.com/v1/search?query=${query}`,
+        {
+          headers: { Authorization: Api_Key },
+        }
+      );
 
       console.log(resp);
 
