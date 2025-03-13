@@ -13,6 +13,7 @@
     "@auth0/auth0-react": "^2.3.0",
     "@reduxjs/toolkit": "^2.6.0",
     "@tailwindcss/vite": "^4.0.8",
+    "axios": "^1.8.2",
     "dotenv": "^16.4.7",
     "http-proxy-middleware": "^3.0.3",
     "pexels": "^1.4.0",

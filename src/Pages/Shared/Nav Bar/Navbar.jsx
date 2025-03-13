@@ -21,8 +21,6 @@ const Navbar = () => {
 
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
 
-  console.log(user);
-
   const handleUpload = () => {
     refContainer.current.click();
   };

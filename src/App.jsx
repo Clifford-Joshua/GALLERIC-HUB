@@ -1,5 +1,5 @@
 import Home from "./Pages/HomePage/Home";
-import Pexel from "./Pages/Photos/Pexel";
+import { Pexel, Unsplash, Pexabay } from "./Pages/Photos/main";
 import ScrollToTop from "./ScrollToTop";
 import Error from "./Pages/ErrorPage/Error";
 import Login from "./Pages/LoginPage/Login";
@@ -22,6 +22,22 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Pexel />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/unsplash-photo/:id"
+            element={
+              <ProtectedRoute>
+                <Unsplash />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pexabay-photo/:id"
+            element={
+              <ProtectedRoute>
+                <Pexabay />
               </ProtectedRoute>
             }
           />

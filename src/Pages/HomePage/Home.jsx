@@ -1,4 +1,4 @@
-import Photos from "./Home Folder/Photos";
+import { Photos, UnsplashPhoto, Pexabay } from "./Home Folder/main";
 import BodyNav from "../Shared/Nav Bar/BodyNav";
 import Title from "../Shared/TitleContainer/Title";
 import IntroContainer from "../Shared/IntroPage/IntroContainer";
@@ -15,6 +15,12 @@ const Home = () => {
       <BodyNav />
       <Title title={"pexel"} content={"photos"} />
       <Photos />
+
+      <Title title={"Unsplash"} content={"photos"} />
+      <UnsplashPhoto />
+
+      <Title title={"Pexabay"} content={"photos"} />
+      <Pexabay />
     </Wrapper>
   );
 };

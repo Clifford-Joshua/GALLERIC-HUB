@@ -1,39 +1,46 @@
-import { useEffect, useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Loader from "../../Shared/Animation/Loader";
 import { TiArrowForwardOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
-import { setPhotos, setError, setLoading } from "../../../Features/pexelSlice";
+import { setLoading } from "../../../Features/pexelSlice";
 
-const Api_Key = import.meta.env.VITE_PEXEL_API_KEY;
+const Api_Key = `?client_id=${import.meta.env.VITE_UNSPLASH_API_ACCESS_KEY}`;
 
-const Photos = () => {
+const SearchEndPoint = `https://api.unsplash.com/search/photos/`;
+const EndPoint = `https://api.unsplash.com/photos/
+`;
+
+const UnsplashPhoto = () => {
   const dispatch = useDispatch();
+  const [photos, setPhotos] = useState([]);
+  const [error, setError] = useState(false);
   const [errormessage, setErrorMessage] = useState("");
-  const { photos, query, error, loading } = useSelector((store) => store.pexel);
+
+  const { query, loading } = useSelector((store) => store.pexel);
 
   const FetchApi = async () => {
-    dispatch(setLoading(true));
-    try {
-      const resp = await fetch(
-        `https://api.pexels.com/v1/search?query=${query}`,
-        {
-          headers: { Authorization: Api_Key },
-        }
-      );
+    const url = `${EndPoint}${Api_Key}`;
+    const urlQuery = `${SearchEndPoint}${Api_Key}&query=${query}`;
 
-      if (resp.ok) {
-        dispatch(setError(false));
-        const data = await resp.json();
-        dispatch(setPhotos(data.photos));
+    dispatch(setLoading(true));
+    const response = await axios(`${query ? urlQuery : url}`);
+    try {
+      if (response.status == 200) {
+        const data = query ? response.data.results : response.data;
+        setPhotos(data);
       } else {
-        dispatch(setError(true));
-        setErrorMessage(resp.statusText);
+        setError(true);
+        setErrorMessage(response.statusText);
       }
+
       dispatch(setLoading(false));
     } catch (error) {
-      console.log(error);
+      setError(true);
+      setErrorMessage(error.message);
+      console.error("API Fetch Error:", error);
     }
   };
 
@@ -43,7 +50,7 @@ const Photos = () => {
   }, [query]);
 
   return (
-    <Wrapper className="p-4">
+    <Wrapper className="p-6 w-full">
       <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
         {loading ? (
           <Loader />
@@ -52,13 +59,13 @@ const Photos = () => {
             Error Occurred : {errormessage} Search for another keyword
           </h1>
         ) : (
-          photos.map(({ id, src: { medium }, alt }) => {
+          photos.map(({ alt_description, id, urls: { small } }) => {
             return (
               <Link to={`/pexel-photo/${id}`} key={id}>
                 <div className="border-2 border-gray-200 rounded-lg overflow-hidden shadow-xl relative group cursor-pointer">
                   <img
-                    src={medium}
-                    alt={alt}
+                    src={small}
+                    alt={alt_description}
                     className="rounded-lg w-full object-cover h-65"
                   />
                   <h2 className="absolute top-0 w-full h-full z-10 bg-neutral-500 bg-opacity-50 text-white hover:text-green-400 text-center font-semibold text-[1.2rem] flex justify-center items-center capitalize opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -76,12 +83,7 @@ const Photos = () => {
 };
 
 const Wrapper = styled.div`
-  /* =============================================== */
-  /* Mobile View */
-
-  img:hover .image_link {
-    display: flex;
-  }
+  /* ======================================================== */
 `;
 
-export default Photos;
+export default UnsplashPhoto;
