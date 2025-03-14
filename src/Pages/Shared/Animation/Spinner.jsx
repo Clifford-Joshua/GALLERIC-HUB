@@ -3,9 +3,8 @@ import styled from "styled-components";
 const Spinner = () => {
   return (
     <Wrapper>
-      <div type="button" className="bg-indigo-500 ..." disabled>
-        <svg className="mr-3 size-5 animate-spin ..." viewBox="0 0 24 24"></svg>
-        Processing…
+      <div className="w-full h-screen flex items-center justify-center">
+        <div className="w-[150px] h-[150px] border-t-[0.8rem] border-cyan-400 rounded-full animate-spin  duration-[1000ms]"></div>
       </div>
     </Wrapper>
   );

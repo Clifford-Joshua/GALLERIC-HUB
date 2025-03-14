@@ -28,7 +28,7 @@ const UnsplashPhoto = () => {
     dispatch(setLoading(true));
     const response = await axios(`${query ? urlQuery : url}`);
     try {
-      if (response.status == 200) {
+      if (response.status === 200) {
         const data = query ? response.data.results : response.data;
         setPhotos(data);
       } else {
@@ -69,7 +69,7 @@ const UnsplashPhoto = () => {
                     className="rounded-lg w-full object-cover h-65"
                   />
                   <h2 className="absolute top-0 w-full h-full z-10 bg-neutral-500 bg-opacity-50 text-white hover:text-green-400 text-center font-semibold text-[1.2rem] flex justify-center items-center capitalize opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    visit pexel page
+                    visit unsplash page
                     <TiArrowForwardOutline className="ml-2" />
                   </h2>
                 </div>
