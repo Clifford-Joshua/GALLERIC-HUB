@@ -141,6 +141,7 @@ const Pexel = () => {
                     onClick={() => {
                       setIsModalOpen(true);
                       setOpenModal([medium, avg_color]);
+                      
                     }}
                   />
                   <div className="flex items-center justify-between p-2 container w-full absolute top-90  group-hover:top-[80%] transition-all duration-[500ms] ease-linear">
@@ -157,7 +158,10 @@ const Pexel = () => {
                         {photographer}
                       </h2>
                     </Link>
-                    <button className="ml-auto p-2 text-white text-2xl bg-black hover:bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50">
+                    <button
+                      onClick={(e) => handleDownload(e, medium, alt)}
+                      className="ml-auto p-2 text-white text-2xl bg-black hover:bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50"
+                    >
                       <TfiDownload />
                     </button>
                   </div>
@@ -170,7 +174,7 @@ const Pexel = () => {
                     <div className="text-white text-[1.5rem] absolute top-[5%] w-screen px-4 flex items-center justify-between">
                       <button
                         onClick={(e) =>
-                          handleDownload(e, openModal[0], openModal[1])
+                          handleDownload(e, openModal[0], "pexel-image")
                         }
                         className=" p-2 text-white text-2xl bg-black hover:bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50"
                       >
