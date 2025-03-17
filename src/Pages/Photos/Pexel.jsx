@@ -1,57 +1,107 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { TfiDownload } from "react-icons/tfi";
 import Spinner from "../Shared/Animation/Spinner";
 import Title from "../Shared/TitleContainer/Title";
+import { useState, useEffect, useRef } from "react";
 import IntroContainer from "../Shared/IntroPage/IntroContainer";
 
 const Api_Key = import.meta.env.VITE_PEXEL_API_KEY;
 
 const Pexel = () => {
+  const isFetching = useRef(false);
+  const [page, setPage] = useState(1);
   const [error, setError] = useState("");
-  // const [per_Page, setPer_Page] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [FetchedImages, setFetchedImages] = useState([]);
 
   const { query } = useSelector((store) => store.pexel);
+
   const FetchApi = async () => {
+    if (!query) {
+      setError(true);
+      setErrorMessage("Search query is empty.");
+      return;
+    }
+
+    setError(false);
     setIsLoading(true);
+
     try {
-      const resp = await fetch(
-        `https://api.pexels.com/v1/search?query=${query}`,
+      const response = await axios(
+        `https://api.pexels.com/v1/search?query=${query}&page=${page}`,
         {
           headers: { Authorization: Api_Key },
         }
       );
 
-      if (resp.ok) {
-        setError(false);
-        const data = await resp.json();
-        setFetchedImages(data.photos);
-      } else {
+      if (response.status !== 200) {
         setError(true);
-        setErrorMessage(resp.statusText);
+        setErrorMessage(response.statusText);
+        return;
       }
+
+      const { data } = response;
+
+      page === 1
+        ? setFetchedImages(data.photos)
+        : setFetchedImages((oldPhotos) => [...oldPhotos, ...data.photos]);
+
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      setError(true);
+      setErrorMessage(error);
+    }
+    setIsLoading(false);
+  };
+
+  const ScrollHandler = () => {
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+      if (!isFetching.current) {
+        isFetching.current = true;
+        setPage((oldPage) => oldPage + 1);
+        setTimeout(() => {
+          isFetching.current = false;
+        }, 3000);
+      }
+    }
+  };
+
+  const handleDownload = async (e, imageUrl, imageName) => {
+    try {
+      const response = await fetch(imageUrl, { mode: "cors" });
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = `${imageName || "downloaded-image"}.jpg`; // Set a default name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download failed", error);
     }
   };
 
   useEffect(() => {
-    FetchApi();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!query) return;
+    setPage(1);
   }, [query]);
 
   useEffect(() => {
-    const event = window.addEventListener("scroll", () => {
-      if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
-        console.log("hi");
-      }
-    });
-    return () => window.removeEventListener("scroll", event);
+    FetchApi();
+  }, [page, query]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", ScrollHandler);
+    return () => window.removeEventListener("scroll", ScrollHandler);
   }, []);
 
   return (
@@ -66,19 +116,49 @@ const Pexel = () => {
             Error Occurred : {errorMessage} Search for another keyword
           </h1>
         ) : (
-          FetchedImages.map(({ id, src: { medium }, alt }) => {
-            return (
-              <Link to={`/pexel-photo/${id}`} key={id}>
-                <div className="border-2 border-gray-200 rounded-lg overflow-hidden shadow-xl relative group cursor-pointer">
+          FetchedImages.map(
+            ({
+              id,
+              src: { medium, small },
+              alt,
+              photographer,
+              photographer_url,
+            }) => {
+              return (
+                <div
+                  key={id}
+                  className="border-2 border-gray-200 rounded-lg overflow-hidden shadow-xl relative group cursor-pointer"
+                >
                   <img
                     src={medium}
                     alt={alt}
                     className="rounded-lg w-full object-cover h-65"
                   />
+                  <div className="flex items-center justify-between p-2 container w-full absolute top-90  group-hover:top-[80%] transition-all duration-[500ms] ease-linear">
+                    <Link
+                      to={photographer_url}
+                      className="hidden items-center justify-center md:flex gap-2.5"
+                    >
+                      <img
+                        src={small}
+                        alt={photographer}
+                        className="w-[40px] h-[40px] rounded-full object-cover shadow-xl shadow-black"
+                      />
+                      <h2 className="font-bold text-[1rem] text-white text">
+                        {photographer}
+                      </h2>
+                    </Link>
+                    <button
+                      onClick={(e) => handleDownload(e, small, alt)}
+                      className="ml-auto p-2 text-white text-2xl bg-black hover:bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50"
+                    >
+                      <TfiDownload />
+                    </button>
+                  </div>
                 </div>
-              </Link>
-            );
-          })
+              );
+            }
+          )
         )}
       </div>
     </Wrapper>
@@ -87,6 +167,10 @@ const Pexel = () => {
 
 const Wrapper = styled.div`
   /* ==================================================== */
+
+  .text {
+    text-shadow: 2px 2px 3px black;
+  }
 `;
 
 export default Pexel;

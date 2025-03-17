@@ -16,6 +16,7 @@
     "axios": "^1.8.2",
     "dotenv": "^16.4.7",
     "http-proxy-middleware": "^3.0.3",
+    "lodash.debounce": "^4.0.8",
     "pexels": "^1.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

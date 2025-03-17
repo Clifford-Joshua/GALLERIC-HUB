@@ -13,8 +13,8 @@ const pexelSlice = createSlice({
   name: "pexel",
   initialState,
   reducers: {
-    setPage: (state, action) => {
-      state.page = action.payload;
+    setPage: (state) => {
+      state.page += 1;
     },
     setPhotos: (state, action) => {
       state.photos = action.payload;
