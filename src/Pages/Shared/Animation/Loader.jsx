@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const Loader = () => {
   return (
-    <Wrapper>
+    <Wrapper className="w-screen">
       <div className="mx-auto w-full max-w-sm rounded-md border border-blue-300 p-4 flex items-center justify-center">
         <div className="flex animate-pulse space-x-4">
           <div className="size-10 rounded-full bg-gray-200"></div>
