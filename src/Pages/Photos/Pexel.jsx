@@ -64,13 +64,16 @@ const Pexel = () => {
   };
 
   const ScrollHandler = () => {
-    if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.scrollHeight - 30
+    ) {
       if (!isFetching.current) {
         isFetching.current = true;
         setPage((oldPage) => oldPage + 1);
         setTimeout(() => {
           isFetching.current = false;
-        }, 3000);
+        }, 1000);
       }
     }
   };
@@ -110,7 +113,7 @@ const Pexel = () => {
 
   return (
     <Wrapper>
-      <IntroContainer photo={FetchedImages[3]} />
+      <IntroContainer photo={FetchedImages[3]?.src?.original} />
       <Title title={"pexel"} content={"images"} />
       <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
         {isLoading ? (

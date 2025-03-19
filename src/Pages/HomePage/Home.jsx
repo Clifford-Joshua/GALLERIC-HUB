@@ -11,7 +11,7 @@ const Home = () => {
 
   return (
     <Wrapper>
-      <IntroContainer photo={photos[10]} />
+      <IntroContainer photo={photos[10]?.src?.original} />
       <BodyNav />
       <Title title={"pexel"} content={"photos"} />
       <Photos />

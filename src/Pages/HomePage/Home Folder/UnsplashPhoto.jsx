@@ -61,7 +61,7 @@ const UnsplashPhoto = () => {
         ) : (
           photos.map(({ alt_description, id, urls: { small } }) => {
             return (
-              <Link to={`/pexel-photo/${id}`} key={id}>
+              <Link to={`/unsplash-photo/${id}`} key={id}>
                 <div className="border-2 border-gray-200 rounded-lg overflow-hidden shadow-xl relative group cursor-pointer">
                   <img
                     src={small}

@@ -12,7 +12,7 @@ const IntroContainer = ({ photo }) => {
   return (
     <Wrapper
       className={`w-full min-h-[70vh] md:min-h-[40vh] lg:min-h-[90vh] p-4 flex flex-col gap-[2rem] justify-center items-center `}
-      style={bgStyle(photo ? photo?.src?.original : backgroundImage)}
+      style={bgStyle(photo ? photo : backgroundImage)}
     >
       <Title />
       <Search />
