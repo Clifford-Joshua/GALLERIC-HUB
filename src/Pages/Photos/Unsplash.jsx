@@ -2,7 +2,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { FaTimes } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { TfiDownload } from "react-icons/tfi";
