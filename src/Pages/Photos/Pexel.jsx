@@ -141,7 +141,8 @@ const Pexel = () => {
                     onClick={() => {
                       setIsModalOpen(true);
                       setOpenModal([medium, avg_color]);
-                      
+
+                      console.log(openModal);
                     }}
                   />
                   <div className="flex items-center justify-between p-2 container w-full absolute top-90  group-hover:top-[80%] transition-all duration-[500ms] ease-linear">
@@ -165,34 +166,33 @@ const Pexel = () => {
                       <TfiDownload />
                     </button>
                   </div>
-                  <div
-                    className={` w-screen h-screen fixed top-0 z-[999]  items-center justify-center  ${
-                      isModalOpen ? "flex md:hidden" : "hidden"
-                    }`}
-                    style={{ backgroundColor: `${avg_color}` }}
-                  >
-                    <div className="text-white text-[1.5rem] absolute top-[5%] w-screen px-4 flex items-center justify-between">
-                      <button
-                        onClick={(e) =>
-                          handleDownload(e, openModal[0], "pexel-image")
-                        }
-                        className=" p-2 text-white text-2xl bg-black hover:bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50"
-                      >
-                        <TfiDownload />
-                      </button>
-                      <FaTimes onClick={() => setIsModalOpen(false)} />
-                    </div>
-                    <img
-                      src={openModal[0]}
-                      alt={openModal[1]}
-                      className="w-[95%] rounded-xl object-cover"
-                    />
-                  </div>
                 </div>
               );
             }
           )
         )}
+        <div
+          className={` w-screen h-screen fixed top-0 z-[999]  items-center justify-center  ${
+            isModalOpen ? "flex md:hidden" : "hidden"
+          }`}
+          style={{ backgroundColor: `${openModal[1]}` }}
+        >
+          <div className="text-white text-[1.5rem] absolute top-[5%] w-screen px-4 flex items-center justify-between">
+            <button
+              onClick={(e) => handleDownload(e, openModal[0], "pexel-image")}
+              className=" p-2 text-white text-2xl bg-black hover:bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50"
+            >
+              <TfiDownload />
+            </button>
+            <FaTimes onClick={() => setIsModalOpen(false)} />
+          </div>
+
+          <img
+            src={openModal[0]}
+            alt="modal"
+            className="w-[95%] object-cover rounded-xl"
+          />
+        </div>
       </div>
     </Wrapper>
   );
