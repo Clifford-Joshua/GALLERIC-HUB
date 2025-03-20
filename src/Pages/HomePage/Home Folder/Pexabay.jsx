@@ -9,6 +9,8 @@ import { setLoading } from "../../../Features/pexelSlice";
 
 const EndPoint = `https://pixabay.com/api/`;
 const Api_Key = `?key=${import.meta.env.VITE_PEXABAY_API_KEY}`;
+
+
 const Pexabay = () => {
   const dispatch = useDispatch();
   const [photos, setPhotos] = useState([]);
