@@ -26,13 +26,15 @@
 
 ### React Icons
 
+### axios
+
 # Authentications
 
 ### Auth0
 
 # 🚀 Learning & Experimenting
 
-#### This project is my first time exploring Tailwind CSS and Vite while building a responsive image gallery website. The goal is to improve my understanding of modern web development best practices.This a personal project based on helping me improve......
+#### This project is my first time exploring Tailwind CSS and Vite while building a responsive image gallery and video website. The goal is to improve my understanding of modern web development best practices.This a personal project based on helping me improve......
 
 # 💡 Feedback & Contributions
 
