@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { TfiDownload } from "react-icons/tfi";
+import { MdFileDownloadOff } from "react-icons/md";
 import Loader from "../Shared/Animation/Loader";
 import Title from "../Shared/TitleContainer/Title";
 import { useEffect, useState, useRef } from "react";
@@ -46,7 +46,6 @@ const PexelVideo = () => {
       }
 
       const data = await resp.json();
-      console.log(data);
 
       page === 1
         ? setVideos(data.videos)
@@ -73,25 +72,6 @@ const PexelVideo = () => {
           isFetching.current = false;
         }, 1000);
       }
-    }
-  };
-
-  const handleDownload = async (e, imageUrl, imageName) => {
-    try {
-      const response = await fetch(imageUrl, { mode: "cors" });
-      const blob = await response.blob();
-      const blobUrl = URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = `${imageName || "downloaded-video"}.jpg`; // Set a default name
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      toast.error("Download failed", error);
     }
   };
 
@@ -135,8 +115,10 @@ const PexelVideo = () => {
                     muted
                     src={video_url}
                     poster={video_image}
+                    onTouchEnd={(e) => e.target.pause()}
                     onMouseEnter={(e) => e.target.play()}
                     onMouseLeave={(e) => e.target.pause()}
+                    onTouchStart={(e) => e.target.play()} // Fix for mobile
                     className="rounded-lg w-full object-cover h-65"
                   ></video>
 
@@ -155,10 +137,10 @@ const PexelVideo = () => {
                       </h2>
                     </Link>
                     <button
-                      onClick={(e) => handleDownload(e, video_url, query)}
-                      className="ml-auto p-2 text-white text-2xl bg-black hover:bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50"
+                      onClick={() => toast.error("Download is disabled")}
+                      className="ml-auto p-2 text-white text-2xl bg-gray-800 rounded-lg font-bold cursor-pointer text-[1.3rem] border border-blue-500 shadow-lg shadow-cyan-500/50"
                     >
-                      <TfiDownload />
+                      <MdFileDownloadOff />
                     </button>
                   </div>
                 </div>
