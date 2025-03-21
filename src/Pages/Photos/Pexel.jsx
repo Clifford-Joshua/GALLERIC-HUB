@@ -115,7 +115,7 @@ const Pexel = () => {
     <Wrapper>
       <IntroContainer photo={FetchedImages[3]?.src?.original} />
       <Title title={"pexel"} content={"images"} />
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 p-4">
         {isLoading ? (
           <Spinner />
         ) : error ? (
@@ -144,8 +144,6 @@ const Pexel = () => {
                     onClick={() => {
                       setIsModalOpen(true);
                       setOpenModal([medium, avg_color]);
-
-                      console.log(openModal);
                     }}
                   />
                   <div className="flex items-center justify-between p-2 container w-full absolute top-90  group-hover:top-[80%] transition-all duration-[500ms] ease-linear">

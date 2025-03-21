@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SharedPage from "./Pages/Shared/SharedPage";
 import { Pexel, Unsplash, Pexabay } from "./Pages/Photos/main";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { PexelVideo, PexabayVideo } from "./Pages/SinglePage/main";
 
 const App = () => {
   return (
@@ -45,6 +46,23 @@ const App = () => {
               }
             />
             <Route path="/video" element={<Video />} />
+            <Route
+              path="/video/pexel-video/:id"
+              element={
+                <ProtectedRoute>
+                  <PexelVideo />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/video/pexabay-video/:id"
+              element={
+                <ProtectedRoute>
+                  <PexabayVideo />
+                </ProtectedRoute>
+              }
+            />
           </Route>
           <Route path="*" element={<Error />} />
           <Route path="/login" element={<Login />} />
