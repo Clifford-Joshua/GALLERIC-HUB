@@ -93,7 +93,7 @@ const PexabayVideo = () => {
   return (
     <Wrapper>
       <IntroContainer photo={photos[10]?.src?.original} />
-      <Title title={"pexel"} content={"videos"} />
+      <Title title={"pexabay"} content={"videos"} />
 
       <div className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fit,minmax(250px,1fr))] lg:grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-4 p-4">
         {error ? (
