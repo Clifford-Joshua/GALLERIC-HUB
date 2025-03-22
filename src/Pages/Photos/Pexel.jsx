@@ -173,7 +173,7 @@ const Pexel = () => {
           )
         )}
         <div
-          className={` w-screen h-screen fixed top-0 z-[999]  items-center justify-center  ${
+          className={` w-screen h-screen fixed top-0 left-0 z-[999]  items-center justify-center  ${
             isModalOpen ? "flex md:hidden" : "hidden"
           }`}
           style={{ backgroundColor: `${openModal[1]}` }}
